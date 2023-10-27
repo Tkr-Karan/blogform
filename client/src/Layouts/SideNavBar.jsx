@@ -33,7 +33,7 @@ const SideNavBar = () => {
               activeLink === "/survey-blog" ? "active-link" : ""
             }`}
           ></i>
-          <span className="nav-label">Survey blog</span>
+          <span className="nav-label">Survey block</span>
         </Link>
         <Link
           to={"/video-blog"}
@@ -45,7 +45,7 @@ const SideNavBar = () => {
               activeLink === "/video-blog" ? "active-link" : ""
             }`}
           ></i>
-          <span className="nav-label">video blog</span>
+          <span className="nav-label">video block</span>
         </Link>
         <Link
           to={"/image-blog"}
@@ -57,7 +57,7 @@ const SideNavBar = () => {
               activeLink === "/image-blog" ? "active-link" : ""
             }`}
           ></i>
-          <span className="nav-label">image blog</span>
+          <span className="nav-label">image block</span>
         </Link>
       </div>
     </div>
