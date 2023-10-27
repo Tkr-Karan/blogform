@@ -59,6 +59,18 @@ const SideNavBar = () => {
           ></i>
           <span className="nav-label">image block</span>
         </Link>
+        <Link
+          to={"/analytics"}
+          onClick={() => handleLinkClick("/analytics")}
+          className="nav-links"
+        >
+          <i
+            className={`fa-solid fa-chart-simple ${
+              activeLink === "/analytics" ? "active-link" : ""
+            } `}
+          ></i>
+          <span className="nav-label">analytics</span>
+        </Link>
       </div>
     </div>
   );

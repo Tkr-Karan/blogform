@@ -5,6 +5,7 @@ import SurveyBlog from './Pages/SurveyBlock';
 import ImageBlog from './Pages/ImageBlock';
 import VideoBlog from './Pages/VideoBlock';
 import SideNavBar from './Layouts/SideNavBar';
+import Analytics from './Pages/Analytics';
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Route path='/survey-blog' element={<SurveyBlog />} />
           <Route path='/image-blog' element={<ImageBlog />} />
           <Route path='/video-blog' element={<VideoBlog />} />
+          <Route path='/analytics' element={<Analytics />} />
         </Routes>
       </Router>
     </div>
