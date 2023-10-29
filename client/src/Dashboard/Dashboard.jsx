@@ -1,6 +1,5 @@
 import React from 'react'
 import './Dashboard.css'
-import SideNavBar from '../Layouts/SideNavBar'
 
 const Dashboard = () => {
 
