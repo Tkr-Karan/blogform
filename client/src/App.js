@@ -4,8 +4,9 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import SurveyBlog from './Pages/SurveyBlock';
 import ImageBlog from './Pages/ImageBlock';
 import VideoBlog from './Pages/VideoBlock';
-import SideNavBar from './Layouts/SideNavBar';
+// import SideNavBar from './Layouts/SideNavBar';
 import Analytics from './Pages/Analytics';
+import SideNavBar from './Layouts/SideNavBar.tsx';
 
 
 function App() {
