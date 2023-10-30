@@ -3,6 +3,7 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    background-color: rgba(173, 186, 223, 0.712);
 }
 
 .dash-blogs-container{
