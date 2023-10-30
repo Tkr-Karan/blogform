@@ -5,35 +5,39 @@ const ImageBlock = () => {
   const [isCreating, setIsCreating] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [files, setFiles] = useState<any>([]);
+  const [files, setFiles] = useState<File[]>([]);
 
   const handleCreation = () => {
     setIsCreating(!isCreating);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     const imageBlockData = {
       name: title,
-      desc : description,
-      imageData : files
-    }
+      desc: description,
+      imageData: files,
+    };
 
-    console.log("imaageBlockData: ", imageBlockData)
+    console.log("imaageBlockData: ", imageBlockData);
 
-    setTitle("")
-    setDescription("")
-    setFiles([])
-
+    setTitle("");
+    setDescription("");
+    setFiles([]);
   };
 
-  const handleFileChange = (e) => {
-    const selectedFile = e.target.files;
-    if (selectedFile && files.length < 4) {
-      setFiles([...files, selectedFile]);
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFiles = e.target.files;
+    if (selectedFiles) {
+      const newFiles = Array.from(selectedFiles);
+      if (files.length + newFiles.length <= 4) {
+        const updatedFiles = [...files, ...newFiles];
+        setFiles(updatedFiles);
+      } else {
+        alert("You can only upload up to 4 images.");
+      }
     }
-
     // console.log("image files ==> ", files)
   };
 
@@ -84,7 +88,12 @@ const ImageBlock = () => {
                 {files.map((file, index) => (
                   <div key={index} className="image-preview">
                     <img
-                      style={{ width: "100px", height: "150px", borderRadius:"10px", objectFit:"cover" }}
+                      style={{
+                        width: "100px",
+                        height: "150px",
+                        borderRadius: "10px",
+                        objectFit: "cover",
+                      }}
                       src={URL.createObjectURL(file)}
                       alt=""
                     />
