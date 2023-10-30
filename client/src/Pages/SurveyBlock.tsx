@@ -21,7 +21,7 @@ const SurveyBlock = () => {
             className="create-survey font-bold flex items-center justify-center  gap-2 border-dashed border-2 p-1 cursor-pointer"
             onClick={handleCreation}
           >
-            <i class="fa-solid fa-plus" style={{ color: " #a6a6a6" }}></i>
+            <i className="fa-solid fa-plus" style={{ color: " #a6a6a6" }}></i>
             <p className="text-sm">Create Survey</p>
           </div>
         </div>

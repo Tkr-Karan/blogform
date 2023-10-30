@@ -5,7 +5,7 @@ const ImageBlock = () => {
   const [isCreating, setIsCreating] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [files, setFiles] = useState([]);
+  const [files, setFiles] = useState<any>([]);
 
   const handleCreation = () => {
     setIsCreating(!isCreating);
@@ -29,7 +29,7 @@ const ImageBlock = () => {
   };
 
   const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
+    const selectedFile = e.target.files;
     if (selectedFile && files.length < 4) {
       setFiles([...files, selectedFile]);
     }

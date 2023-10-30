@@ -5,3 +5,46 @@
     justify-content: center;
     align-items: center;
 }
+
+.video-survey-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+       
+}
+
+
+.video-survey-form-container{
+    /* width: 40%; */
+    /* height: 95%; */
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    border-radius: 20px;
+    align-self: center;
+    margin-left:2rem ;
+}
+
+.video-survey-form{
+    
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+video{
+    border-radius: 20px;
+    object-fit: cover;
+}
+
+.labels{
+    text-align: start;
+}
+
+.video-survey-form input{
+    border: 1px solid grey;
+    width: 100%;
+    outline: 0;
+    padding-left: .5rem;
+}

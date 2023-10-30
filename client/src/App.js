@@ -1,9 +1,9 @@
 import './App.css';
 import Dashboard from './Dashboard/Dashboard';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import SurveyBlog from './Pages/SurveyBlock';
-import ImageBlog from './Pages/ImageBlock';
-import VideoBlog from './Pages/VideoBlock';
+import SurveyBlog from './Pages/SurveyBlock.tsx';
+import ImageBlog from './Pages/ImageBlock.tsx';
+import VideoBlog from './Pages/VideoBlock.tsx';
 // import SideNavBar from './Layouts/SideNavBar';
 import Analytics from './Pages/Analytics';
 import SideNavBar from './Layouts/SideNavBar.tsx';
