@@ -6,7 +6,7 @@ const SideNavBar = () => {
   const [activeLink, setActiveLink] = useState(""); // Initialize activeLink state
 
   // Function to handle the click event and set the active link
-  const handleLinkClick = (link) => {
+  const handleLinkClick = (link: string) => {
     setActiveLink(link);
   };
 

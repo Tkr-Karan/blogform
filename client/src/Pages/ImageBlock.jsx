@@ -86,7 +86,7 @@ const ImageBlock = () => {
                     <img
                       style={{ width: "100px", height: "150px", borderRadius:"10px", objectFit:"cover" }}
                       src={URL.createObjectURL(file)}
-                      alt="Selected Image"
+                      alt=""
                     />
                     <button
                       className="remove-image-button p-1 rounded-lg bg-red-400 mt-2"
