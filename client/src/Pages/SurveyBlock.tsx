@@ -8,11 +8,52 @@ const SurveyBlock = () => {
     setIsCreating(!isCreating);
   };
 
+  const handleType = (val) => {
+    console.log(val);
+  };
+
   return (
     <div className="survey-block-container ">
       {isCreating ? (
         <div>
-          <h2>Form Creation</h2>
+          <h2>Survey Form Creation</h2>
+
+          <div className="survey-form-container">
+            <form className="survey-form">
+              <div className="survey-name">
+                <label> Title: </label>
+                <input type="text" />
+              </div>
+              <div className="survey-description">
+                <label> Description: </label>
+                <input type="text" />
+              </div>
+
+              <div className="survey-questions">
+                <p>Select the questions type</p>
+                <div className="questions-type flex gap-2">
+                  <p
+                    className="cursor-pointer p-1 bg-stone-400 rounded-md w-[50%] text-[.8rem]"
+                    onClick={() => handleType("input")}
+                  >
+                    Input
+                  </p>
+                  <p
+                    className="cursor-pointer p-1 bg-stone-400 rounded-md w-[50%] text-[.8rem]"
+                    onClick={() => handleType("checkbox")}
+                  >
+                    Checkbox
+                  </p>{" "}
+                  <p
+                    className="cursor-pointer p-1 bg-stone-400 rounded-md w-[50%] text-[.8rem]"
+                    onClick={() => handleType("radio")}
+                  >
+                    Radio
+                  </p>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
       ) : (
         <div className="flex flex-col gap-2">
