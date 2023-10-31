@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Stylesheets/ImageBlock.css";
+import { ImagesBlocks } from "../ApiCalls/blocks";
 
 const ImageBlock = () => {
   const [isCreating, setIsCreating] = useState(false);
@@ -7,30 +8,50 @@ const ImageBlock = () => {
   const [description, setDescription] = useState("");
   const [files, setFiles] = useState<File[]>([]);
 
+  const [imageURL, setImageURL] = useState<string[]>([]);
+
   const handleCreation = () => {
     setIsCreating(!isCreating);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const imageBlockData = {
-      name: title,
-      desc: description,
-      imageData: files,
-    };
+    try {
+      const base64Images = await convertImagesToBase64(imageURL);
 
-    console.log("imaageBlockData: ", imageBlockData);
+      console.log(base64Images);
+      const imageBlockData = {
+        title: title,
+        description: description,
+        imageUrl: base64Images,
+      };
 
-    setTitle("");
-    setDescription("");
-    setFiles([]);
+      const res = await ImagesBlocks(imageBlockData);
+      if (res.success) {
+        console.log("success");
+      } else {
+        console.log("failed");
+      }
+
+      // console.log("imaageBlockData: ", imageBlockData);
+
+      setTitle("");
+      setDescription("");
+      setFiles([]);
+    } catch (error) {}
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = e.target.files;
     if (selectedFiles) {
       const newFiles = Array.from(selectedFiles);
+
+      const imageURLs = [...imageURL, ...newFiles.map((file) => file.name)];
+      setImageURL(imageURLs);
+      console.log(imageURLs);
+
+      // Check if the total number of files doesn't exceed 4
       if (files.length + newFiles.length <= 4) {
         const updatedFiles = [...files, ...newFiles];
         setFiles(updatedFiles);
@@ -38,6 +59,7 @@ const ImageBlock = () => {
         alert("You can only upload up to 4 images.");
       }
     }
+
     // console.log("image files ==> ", files)
   };
 
@@ -45,6 +67,27 @@ const ImageBlock = () => {
     const updatedFiles = [...files];
     updatedFiles.splice(index, 1);
     setFiles(updatedFiles);
+  };
+
+  const convertImagesToBase64 = (imageName) => {
+    return Promise.all(
+      imageName.map(async (imageName) => {
+        return new Promise((resolve, reject) => {
+          // Find the corresponding file by name
+          const file = files.find((f) => f.name === imageName);
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+              resolve(reader.result);
+            };
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+          } else {
+            reject("File not found");
+          }
+        });
+      })
+    );
   };
 
   useEffect(() => {
@@ -116,7 +159,10 @@ const ImageBlock = () => {
               </div>
             </div>
 
-            <button className="save-btn self-end w-16 bottom-0 right-0 mb-2 mr-4 bg-blue-600 p-2 rounded-xl cursor-pointer text-white">
+            <button
+              className="save-btn self-end w-16 bottom-0 right-0 mb-2 mr-4 bg-blue-600 p-2 rounded-xl cursor-pointer text-white"
+              type="submit"
+            >
               Save
             </button>
           </form>
