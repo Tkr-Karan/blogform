@@ -16,6 +16,7 @@ app.get("/", (req, res) => {
 
 // adding routes
 const ImageRoutes = require("./routes/ImageBlockRoutes");
+const VideoRoutes = require("./routes/VideoBlockRoutes");
 
 app.use(cors());
 app.use(express.json());
@@ -23,6 +24,7 @@ app.use(bodyParser.json({ limit: "100mb" }));
 app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
 
 app.use("/api/image", ImageRoutes);
+app.use("/api/video", VideoRoutes);
 
 app.listen(PORT, () => {
   console.log(`Your server is working fine on ${PORT}, keep working`);

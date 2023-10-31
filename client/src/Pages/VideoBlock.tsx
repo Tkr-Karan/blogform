@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Stylesheets/VideoBlock.css";
-import ReactPlayer from 'react-player'
+import ReactPlayer from "react-player";
+import { VideoBlocks } from "../ApiCalls/blocks";
 
 const VideoBlock = () => {
   const [isCreating, setIsCreating] = useState(false);
@@ -12,22 +13,32 @@ const VideoBlock = () => {
     setIsCreating(!isCreating);
   };
 
-
-  const handleVideoSurvey = (e) => {
+  const handleVideoSurvey = async (e) => {
     e.preventDefault();
 
-    const videoBlockData = {
-      name: title,
-      desc : description,
-      videoData : videoFiles
+    try {
+      const videoBlockData = {
+        title: title,
+        description: description,
+        videoUrl: videoFiles.map((video) => video.name)[0],
+      };
+
+      console.log("imaageBlockData: ", videoBlockData);
+
+      const res = await VideoBlocks(videoBlockData);
+      if (res.success) {
+        console.log("success");
+      } else {
+        console.log("failed");
+      }
+
+      setTitle("");
+      setDescription("");
+      setVideoFiles([]);
+    } catch (error) {
+      console.log(error);
     }
-
-    console.log("imaageBlockData: ", videoBlockData)
-
-    setTitle("")
-    setDescription("")
-    setVideoFiles([])
-  }
+  };
 
   const handleAddVideo = (e) => {
     const selectedVideo = e.target.files[0];
@@ -46,7 +57,7 @@ const VideoBlock = () => {
   useEffect(() => {
     console.log("videoFiles", videoFiles);
   }, [videoFiles]);
-  
+
   return (
     <div className="video-block-container">
       {isCreating ? (
@@ -54,7 +65,7 @@ const VideoBlock = () => {
           <h2>Video Survey Form</h2>
 
           <form className="video-survey-form" onSubmit={handleVideoSurvey}>
-          <div className="video-title labels">
+            <div className="video-title labels">
               <label>Video Title: {title} </label>
               <input
                 className="form-inputs"
@@ -81,29 +92,35 @@ const VideoBlock = () => {
               <div className="upload-video-container">
                 {videoFiles.map((video, index) => (
                   <div key={index} className="">
-                  <ReactPlayer  url={URL.createObjectURL(video)} controls={true} width="400px"
-          height="200px" />
+                    <ReactPlayer
+                      url={URL.createObjectURL(video)}
+                      controls={true}
+                      width="400px"
+                      height="200px"
+                    />
 
-                <button
-                className="remove-image-button p-1 rounded-lg bg-red-400 mt-2"
-                onClick={() => removeVideo(index)}
-              >
-                Remove
-              </button></div>
+                    <button
+                      className="remove-image-button p-1 rounded-lg bg-red-400 mt-2"
+                      onClick={() => removeVideo(index)}
+                    >
+                      Remove
+                    </button>
+                  </div>
                 ))}
 
-
-                { videoFiles.length < 1 && <input type="file" accept="video/*" onChange={handleAddVideo} />}
+                {videoFiles.length < 1 && (
+                  <input
+                    type="file"
+                    accept="video/*"
+                    onChange={handleAddVideo}
+                  />
+                )}
               </div>
-
             </div>
-              <button className="p-2 rounded-lg bg-green-600 text-white mt-2 w-[20%] text-center self-end cursor-pointer">
-                save
-              </button>
-
-
+            <button className="p-2 rounded-lg bg-green-600 text-white mt-2 w-[20%] text-center self-end cursor-pointer">
+              save
+            </button>
           </form>
-
         </div>
       ) : (
         <div className="flex flex-col gap-2">
