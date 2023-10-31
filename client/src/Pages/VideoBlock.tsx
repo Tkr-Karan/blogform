@@ -17,24 +17,38 @@ const VideoBlock = () => {
     e.preventDefault();
 
     try {
-      const videoBlockData = {
-        title: title,
-        description: description,
-        videoUrl: videoFiles.map((video) => video.name)[0],
-      };
+      if (videoFiles.length > 0) {
+        const selectedVideo = videoFiles[0];
+        const reader = new FileReader();
 
-      console.log("imaageBlockData: ", videoBlockData);
+        reader.onload = async (event) => {
+          const base64Data = event.target && event.target.result; // Base64-encoded video data
 
-      const res = await VideoBlocks(videoBlockData);
-      if (res.success) {
-        console.log("success");
-      } else {
-        console.log("failed");
+          console.log(base64Data)
+
+          const videoBlockData = {
+            title: title,
+            description: description,
+            videoUrl: base64Data, // Store the base64-encoded video data
+          };
+
+          console.log(videoBlockData)
+
+          const res = await VideoBlocks(videoBlockData);
+          if (res.success) {
+            console.log("Video upload success");
+          } else {
+            console.log("Video upload failed");
+          }
+        };
+
+        reader.readAsDataURL(selectedVideo);
       }
 
       setTitle("");
       setDescription("");
       setVideoFiles([]);
+    
     } catch (error) {
       console.log(error);
     }
