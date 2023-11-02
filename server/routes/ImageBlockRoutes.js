@@ -27,4 +27,20 @@ router.post("/add-images-block", async (req, res) => {
   }
 });
 
+router.get("/get-image-block-data", async (req, res) => {
+  try {
+    const imageBlocks = await ImageBlocks.find();
+    res.send({
+      success: true,
+      message: "images block fetched successfully",
+      data: imageBlocks,
+    });
+  } catch (error) {
+    res.send({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
 module.exports = router;

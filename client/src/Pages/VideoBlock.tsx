@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./Stylesheets/VideoBlock.css";
 import ReactPlayer from "react-player";
 import { VideoBlocks } from "../ApiCalls/blocks";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const VideoBlock = () => {
   const [isCreating, setIsCreating] = useState(false);
@@ -24,7 +26,7 @@ const VideoBlock = () => {
         reader.onload = async (event) => {
           const base64Data = event.target && event.target.result; // Base64-encoded video data
 
-          console.log(base64Data)
+          console.log(base64Data);
 
           const videoBlockData = {
             title: title,
@@ -32,11 +34,11 @@ const VideoBlock = () => {
             videoUrl: base64Data, // Store the base64-encoded video data
           };
 
-          console.log(videoBlockData)
+          console.log(videoBlockData);
 
           const res = await VideoBlocks(videoBlockData);
           if (res.success) {
-            console.log("Video upload success");
+            toast.success("Video upload successfully");
           } else {
             console.log("Video upload failed");
           }
@@ -48,7 +50,6 @@ const VideoBlock = () => {
       setTitle("");
       setDescription("");
       setVideoFiles([]);
-    
     } catch (error) {
       console.log(error);
     }
@@ -119,6 +120,7 @@ const VideoBlock = () => {
                     >
                       Remove
                     </button>
+                   
                   </div>
                 ))}
 
@@ -134,6 +136,7 @@ const VideoBlock = () => {
             <button className="p-2 rounded-lg bg-green-600 text-white mt-2 w-[20%] text-center self-end cursor-pointer">
               save
             </button>
+            <ToastContainer />
           </form>
         </div>
       ) : (

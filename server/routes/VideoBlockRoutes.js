@@ -27,4 +27,20 @@ router.post("/add-video-block", async (req, res) => {
   }
 });
 
+router.get("/get-video-block-data", async (req, res) => {
+  try {
+    const videoBlocks = await VideoBlock.find();
+    res.send({
+      success: true,
+      message: "video block fetched successfully",
+      data: videoBlocks,
+    });
+  } catch (error) {
+    res.send({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
 module.exports = router;
