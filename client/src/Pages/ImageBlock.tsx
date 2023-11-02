@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Stylesheets/ImageBlock.css";
 import { ImagesBlocks } from "../ApiCalls/blocks";
+import { ToastContainer, toast } from "react-toastify";
 
 const ImageBlock = () => {
   const [isCreating, setIsCreating] = useState(false);
@@ -29,9 +30,9 @@ const ImageBlock = () => {
 
       const res = await ImagesBlocks(imageBlockData);
       if (res.success) {
-        console.log("success");
+        toast.success("Image survey dded successfully")
       } else {
-        console.log("failed");
+        toast.error("Image survey failed!")
       }
 
       // console.log("imaageBlockData: ", imageBlockData);
@@ -165,6 +166,7 @@ const ImageBlock = () => {
             >
               Save
             </button>
+            <ToastContainer />
           </form>
         </div>
       ) : (
