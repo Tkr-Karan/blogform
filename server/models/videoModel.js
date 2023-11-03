@@ -13,6 +13,9 @@ const VideoBlockSchema = new mongoose.Schema(
     videoUrl: {
       type: String,
     },
+    blockType: {
+      type: {type: String ,default: "video"},
+    },
   },
   { timestamps: true }
 );

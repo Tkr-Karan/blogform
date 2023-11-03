@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Dashboard.css";
-import ReactPlayer from "react-player";
 import Loader from "../Atom/Loader";
+import ReactPlayer from "react-player";
 
 const Dashboard = () => {
   // const [imageData, setImageData] = useState({});
@@ -9,7 +9,7 @@ const Dashboard = () => {
 
   const [blockData, setBlockData] = useState({ imageData: {}, videoData: {} });
   const [isShow, setIsShow] = useState(false);
-  const [currentData, setCurrentData] = useState({});
+  const [currentData, setCurrentData] = useState({ data: {} });
 
   const fetchingBlockData = async () => {
     try {
@@ -38,41 +38,45 @@ const Dashboard = () => {
   const handleClick = (val) => {
     console.log(val);
     setIsShow(true);
-    setCurrentData(val);
+    setCurrentData({ data: val });
 
+    console.log("currentData: ", currentData);
+  };
 
-    console.log(currentData)
+  const handleClose = () => {
+    setIsShow(false);
   };
 
   return (
     <div className="dashboard-container flex justify-between">
-      <h1 className="text-[1.5rem] font-bold">Welcome To Dashboard!!</h1>
-
       <div className="dash-blogs-container h-[100%] w-[100%] self-center ">
         {blockData.imageData.data && blockData.videoData.data ? (
-          <div className="flex flex-wrap gap-3 justify-center align-center self-center ">
-            {blockData.imageData.data.map((block, index) => {
-              return (
-                <div
-                  key={index}
-                  className="w-[8rem] p-2 rounded-lg bg-slate-400 cursor-pointer"
-                  onClick={() => handleClick(block)}
-                >
-                  {block.title}
-                </div>
-              );
-            })}
-            {blockData.videoData.data.map((block, index) => {
-              return (
-                <div
-                  key={index}
-                  className="w-[8rem] p-2 rounded-lg bg-slate-400 cursor-pointer"
-                  onClick={() => handleClick(block)}
-                >
-                  {block.title}
-                </div>
-              );
-            })}
+          <div className="w-[80%] flex flex-col justify-center align-center self-center ">
+            <h1 className="text-[1.5rem] font-bold">Welcome To Dashboard!!</h1>
+            <div className="w-[80%] flex flex-wrap gap-2 self-center items-center justify-center">
+              {blockData.imageData.data.map((block, index) => {
+                return (
+                  <div
+                    key={index}
+                    className="w-[8rem] p-2 rounded-lg bg-slate-400 cursor-pointer"
+                    onClick={() => handleClick(block)}
+                  >
+                    {block.title}
+                  </div>
+                );
+              })}
+              {blockData.videoData.data.map((block, index) => {
+                return (
+                  <div
+                    key={index}
+                    className="w-[8rem] p-2 rounded-lg bg-slate-400 cursor-pointer"
+                    onClick={() => handleClick(block)}
+                  >
+                    {block.title}
+                  </div>
+                );
+              })}
+            </div>
           </div>
         ) : (
           // <div className="no-blogs">
@@ -82,8 +86,47 @@ const Dashboard = () => {
         )}
 
         {/* block complete details */}
-        {isShow && Object.keys(currentData).length && (
-          <div className="block-details w-[80%] h-[100%] bg-slate-100">
+        {isShow && (
+          <div className="block-details w-[40%] h-[100%] bg-slate-100 flex justify-center items-center relative">
+            <div
+              className="close absolute top-2 left-4 text-[1.3rem] cursor-pointer"
+              onClick={handleClose}
+            >
+              <i class="fa-solid fa-angle-right"></i>
+            </div>
+
+            {Object.keys(currentData).map((curr, indx) => {
+              return (
+                <div key={indx} className="w-[100%]">
+                  <h3>Title: {currentData[curr].title}</h3>
+                  <p>Descripiton: {currentData[curr].description}</p>
+                  {currentData[curr].blockType.type == "image" ? (
+                    <div className="flex flex-wrap gap-2 justify-center items-center">
+                      {currentData[curr].imageUrl.map((img, imgIndex) => (
+                        <img
+                          key={imgIndex}
+                          src={img}
+                          alt=""
+                          width={150}
+                          height={150}
+                        />
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="flex flex-wrap gap-2 justify-center items-center">
+                      <ReactPlayer
+                        // key={sq}
+                        url={currentData[curr].videoUrl}
+                        alt=""
+                        width={250}
+                        height={150}
+                        controls={true}
+                      />
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         )}
       </div>
