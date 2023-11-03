@@ -13,6 +13,9 @@ const ImageBlockSchema = new mongoose.Schema(
     imageUrl: {
       type: [String],
     },
+    blockType: {
+      type: {type: String ,default: "image"},
+    },
   },
   { timestamps: true }
 );
