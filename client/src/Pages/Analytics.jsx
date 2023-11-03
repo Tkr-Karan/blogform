@@ -2,8 +2,8 @@ import React from 'react'
 
 const Analytics = () => {
   return (
-    <div>
-        <h2>Here your all analytics</h2>
+    <div className='w-[100%] h-[100%] flex justify-center items-center'>
+        <h2>No Analytics Yet!</h2>
     </div>
   )
 }
