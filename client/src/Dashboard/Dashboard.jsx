@@ -35,6 +35,8 @@ const Dashboard = () => {
     fetchingBlockData();
   }, []);
 
+
+
   const handleClick = (val) => {
     console.log(val);
     setIsShow(true);
@@ -52,12 +54,11 @@ const Dashboard = () => {
   };
 
   // creating the shareabe link
-  const generateShareableLink = (id) => {
-    console.log(`${window.location.origin}/${id}`)
-
-
+  const generateShareableLink = (id, type, blockData) => {
+    console.log("selected --> ", blockData )
+    console.log(`http://localhost:3001/published/${type}/${id}`);
   };
-
+  
   return (
     <div className="dashboard-container flex justify-between">
       <div className="dash-blogs-container h-[100%] w-[100%] self-center ">
@@ -70,7 +71,7 @@ const Dashboard = () => {
                   <div
                     key={index}
                     className="w-[8rem] p-2 rounded-lg bg-slate-400 cursor-pointer"
-                    onClick={() => handleClick(block)}
+                    onClick={() => handleClick(block, "image")}
                   >
                     {block.title}
                   </div>
@@ -98,6 +99,7 @@ const Dashboard = () => {
 
         {/* block complete details */}
         {isShow && (
+          
           <div className="block-details w-[40%] h-[100%] bg-slate-100 flex justify-center items-center relative">
             <div
               className="close absolute top-2 left-4 text-[1.3rem] cursor-pointer"
@@ -106,7 +108,7 @@ const Dashboard = () => {
               <i class="fa-solid fa-angle-right"></i>
             </div>
 
-            {Object.keys(currentData).map((curr, indx) => {
+            {Object.keys(currentData).map((curr, indx, ) => {
               return (
                 <div
                   key={indx}
@@ -142,7 +144,13 @@ const Dashboard = () => {
                   <div className="actions-btn self-center flex gap-4">
                     <div
                       className="w-[100%] publish rounded-md bg-emerald-500 p-3 cursor-pointer font-bold"
-                      onClick={() => generateShareableLink(currentData[curr]._id)}
+                      onClick={() =>
+                        generateShareableLink(
+                          currentData[curr]._id,
+                          currentData[curr].blockType.type,
+                          currentData[curr]
+                        )
+                      }
                     >
                       <button>Publish</button>
                     </div>

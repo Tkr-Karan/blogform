@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Stylesheets/ImageBlock.css";
 import { ImagesBlocks } from "../ApiCalls/blocks";
 import { ToastContainer, toast } from "react-toastify";
+import Form from "../Molecules/Form";
 
 const ImageBlock = () => {
   const [isCreating, setIsCreating] = useState(false);
