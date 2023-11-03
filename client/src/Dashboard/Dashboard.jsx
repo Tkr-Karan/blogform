@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import "./Dashboard.css";
 import Loader from "../Atom/Loader";
 import ReactPlayer from "react-player";
+import {useNavigate} from 'react-router-dom'
 
 const Dashboard = () => {
-  // const [imageData, setImageData] = useState({});
-  // const [videoData, setVideoData] = useState({});
-
   const [blockData, setBlockData] = useState({ imageData: {}, videoData: {} });
   const [isShow, setIsShow] = useState(false);
   const [currentData, setCurrentData] = useState({ data: {} });
+
+  const navigate = useNavigate()
 
   const fetchingBlockData = async () => {
     try {
@@ -46,6 +46,10 @@ const Dashboard = () => {
   const handleClose = () => {
     setIsShow(false);
   };
+
+  const handleAnalytics = () => {
+    navigate("/analytics")
+  }
 
   return (
     <div className="dashboard-container flex justify-between">
@@ -97,7 +101,7 @@ const Dashboard = () => {
 
             {Object.keys(currentData).map((curr, indx) => {
               return (
-                <div key={indx} className="w-[100%]">
+                <div key={indx} className="w-[100%] flex flex-col items-center gap-5">
                   <h3>Title: {currentData[curr].title}</h3>
                   <p>Descripiton: {currentData[curr].description}</p>
                   {currentData[curr].blockType.type == "image" ? (
@@ -124,6 +128,18 @@ const Dashboard = () => {
                       />
                     </div>
                   )}
+
+                  {/* blocks actions buttons */}
+                  <div className="actions-btn self-center flex gap-4">
+                    <div className="w-[100%] publish rounded-md bg-emerald-500 p-3 cursor-pointer font-bold">
+                      <button>Publish</button>
+                    </div>
+
+                    <div className="analytics w-[100%] rounded-md bg-slate-500 p-3 text-white cursor-pointer font-bold" onClick={handleAnalytics}>
+                      <button>Analytics</button>
+                    </div>
+                  </div>
+
                 </div>
               );
             })}
