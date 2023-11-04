@@ -3,6 +3,8 @@ import "./Dashboard.css";
 import Loader from "../Atom/Loader";
 import ReactPlayer from "react-player";
 import { useNavigate } from "react-router-dom";
+import { PublishedBlocks } from "../ApiCalls/blocks";
+import { ToastContainer, toast } from "react-toastify";
 
 const Dashboard = () => {
   const [blockData, setBlockData] = useState({ imageData: {}, videoData: {} });
@@ -35,14 +37,12 @@ const Dashboard = () => {
     fetchingBlockData();
   }, []);
 
-
-
   const handleClick = (val) => {
-    console.log(val);
+    // console.log(val);
     setIsShow(true);
     setCurrentData({ data: val });
 
-    console.log("currentData: ", currentData);
+    // console.log("currentData: ", currentData);
   };
 
   const handleClose = () => {
@@ -54,11 +54,36 @@ const Dashboard = () => {
   };
 
   // creating the shareabe link
-  const generateShareableLink = (id, type, blockData) => {
-    console.log("selected --> ", blockData )
-    console.log(`http://localhost:3001/published/${type}/${id}`);
+  const generateShareableLink = async (
+    id,
+    type,
+    blockData,
+    title,
+    description,
+    imageUrl,
+    videoUrl
+  ) => {
+    try {
+      const published = {
+        title: title,
+        description: description,
+        blockType: type,
+        urls: type === "image" ? imageUrl : videoUrl,
+      };
+
+      const res = await PublishedBlocks(published);
+
+      if (res.success) {
+        console.log(`http://localhost:3001/published/${type}/${id}`);
+        toast.success("block published successfully");
+      } else {
+        toast.error("try after some time facinf some issue!!");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
-  
+
   return (
     <div className="dashboard-container flex justify-between">
       <div className="dash-blogs-container h-[100%] w-[100%] self-center ">
@@ -99,7 +124,6 @@ const Dashboard = () => {
 
         {/* block complete details */}
         {isShow && (
-          
           <div className="block-details w-[40%] h-[100%] bg-slate-100 flex justify-center items-center relative">
             <div
               className="close absolute top-2 left-4 text-[1.3rem] cursor-pointer"
@@ -108,7 +132,7 @@ const Dashboard = () => {
               <i class="fa-solid fa-angle-right"></i>
             </div>
 
-            {Object.keys(currentData).map((curr, indx, ) => {
+            {Object.keys(currentData).map((curr, indx) => {
               return (
                 <div
                   key={indx}
@@ -116,7 +140,7 @@ const Dashboard = () => {
                 >
                   <h3>Title: {currentData[curr].title}</h3>
                   <p>Descripiton: {currentData[curr].description}</p>
-                  {currentData[curr].blockType.type == "image" ? (
+                  {currentData[curr].blockType.type === "image" ? (
                     <div className="flex flex-wrap gap-2 justify-center items-center">
                       {currentData[curr].imageUrl.map((img, imgIndex) => (
                         <img
@@ -148,11 +172,16 @@ const Dashboard = () => {
                         generateShareableLink(
                           currentData[curr]._id,
                           currentData[curr].blockType.type,
-                          currentData[curr]
+                          currentData[curr],
+                          currentData[curr].title,
+                          currentData[curr].description,
+                          currentData[curr].imageUrl,
+                          currentData[curr].videoUrl
                         )
                       }
                     >
                       <button>Publish</button>
+                      <ToastContainer />
                     </div>
 
                     <div

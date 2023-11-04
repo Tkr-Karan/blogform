@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const VideoBlockSchema = new mongoose.Schema(
+const publishedSchema = new mongoose.Schema(
   {
     title: {
       type: String,
@@ -10,13 +10,17 @@ const VideoBlockSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    videoUrl: {
+    urls: {
       type: [String],
     },
     blockType: {
-      type: {type: String ,default: "video"},
+      type: String,
+      required  : true
     },
   },
   { timestamps: true }
 );
-module.exports = mongoose.model("VideoBlock", VideoBlockSchema);
+
+
+
+module.exports = mongoose.model("PublishedBlock", publishedSchema);

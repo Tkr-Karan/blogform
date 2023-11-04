@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Stylesheets/ImageBlock.css";
 import { ImagesBlocks } from "../ApiCalls/blocks";
 import { ToastContainer, toast } from "react-toastify";
-import Form from "../Molecules/Form";
+// import Form from "../Molecules/Form";
 
 const ImageBlock = () => {
   const [isCreating, setIsCreating] = useState(false);
@@ -22,7 +22,7 @@ const ImageBlock = () => {
     try {
       const base64Images = await convertImagesToBase64(imageURL);
 
-      console.log(base64Images);
+      // console.log(base64Images);
       const imageBlockData = {
         title: title,
         description: description,
