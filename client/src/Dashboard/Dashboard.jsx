@@ -2,14 +2,16 @@ import React, { useEffect, useState } from "react";
 import "./Dashboard.css";
 import Loader from "../Atom/Loader";
 import ReactPlayer from "react-player";
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
+import { PublishedBlocks } from "../ApiCalls/blocks";
+import { ToastContainer, toast } from "react-toastify";
 
 const Dashboard = () => {
   const [blockData, setBlockData] = useState({ imageData: {}, videoData: {} });
   const [isShow, setIsShow] = useState(false);
   const [currentData, setCurrentData] = useState({ data: {} });
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const fetchingBlockData = async () => {
     try {
@@ -36,11 +38,11 @@ const Dashboard = () => {
   }, []);
 
   const handleClick = (val) => {
-    console.log(val);
+    // console.log(val);
     setIsShow(true);
     setCurrentData({ data: val });
 
-    console.log("currentData: ", currentData);
+    // console.log("currentData: ", currentData);
   };
 
   const handleClose = () => {
@@ -48,8 +50,39 @@ const Dashboard = () => {
   };
 
   const handleAnalytics = () => {
-    navigate("/analytics")
-  }
+    navigate("/analytics");
+  };
+
+  // creating the shareabe link
+  const generateShareableLink = async (
+    id,
+    type,
+    blockData,
+    title,
+    description,
+    imageUrl,
+    videoUrl
+  ) => {
+    try {
+      const published = {
+        title: title,
+        description: description,
+        blockType: type,
+        urls: type === "image" ? imageUrl : videoUrl,
+      };
+
+      const res = await PublishedBlocks(published);
+
+      if (res.success) {
+        console.log(`http://localhost:3001/published/${type}/${id}`);
+        toast.success("block published successfully");
+      } else {
+        toast.error("try after some time facinf some issue!!");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="dashboard-container flex justify-between">
@@ -63,7 +96,7 @@ const Dashboard = () => {
                   <div
                     key={index}
                     className="w-[8rem] p-2 rounded-lg bg-slate-400 cursor-pointer"
-                    onClick={() => handleClick(block)}
+                    onClick={() => handleClick(block, "image")}
                   >
                     {block.title}
                   </div>
@@ -101,10 +134,13 @@ const Dashboard = () => {
 
             {Object.keys(currentData).map((curr, indx) => {
               return (
-                <div key={indx} className="w-[100%] flex flex-col items-center gap-5">
+                <div
+                  key={indx}
+                  className="w-[100%] flex flex-col items-center gap-5"
+                >
                   <h3>Title: {currentData[curr].title}</h3>
                   <p>Descripiton: {currentData[curr].description}</p>
-                  {currentData[curr].blockType.type == "image" ? (
+                  {currentData[curr].blockType.type === "image" ? (
                     <div className="flex flex-wrap gap-2 justify-center items-center">
                       {currentData[curr].imageUrl.map((img, imgIndex) => (
                         <img
@@ -128,18 +164,33 @@ const Dashboard = () => {
                       />
                     </div>
                   )}
-
                   {/* blocks actions buttons */}
                   <div className="actions-btn self-center flex gap-4">
-                    <div className="w-[100%] publish rounded-md bg-emerald-500 p-3 cursor-pointer font-bold">
+                    <div
+                      className="w-[100%] publish rounded-md bg-emerald-500 p-3 cursor-pointer font-bold"
+                      onClick={() =>
+                        generateShareableLink(
+                          currentData[curr]._id,
+                          currentData[curr].blockType.type,
+                          currentData[curr],
+                          currentData[curr].title,
+                          currentData[curr].description,
+                          currentData[curr].imageUrl,
+                          currentData[curr].videoUrl
+                        )
+                      }
+                    >
                       <button>Publish</button>
+                      <ToastContainer />
                     </div>
 
-                    <div className="analytics w-[100%] rounded-md bg-slate-500 p-3 text-white cursor-pointer font-bold" onClick={handleAnalytics}>
+                    <div
+                      className="analytics w-[100%] rounded-md bg-slate-500 p-3 text-white cursor-pointer font-bold"
+                      onClick={handleAnalytics}
+                    >
                       <button>Analytics</button>
                     </div>
                   </div>
-
                 </div>
               );
             })}

@@ -2,11 +2,6 @@ const router = require("express").Router();
 const ImageBlocks = require("../models/ImageModel");
 
 router.post("/add-images-block", async (req, res) => {
-  // res.send("Hello");
-
-  // console.log(req)
-
-  // console.log("images");
   try {
     const newImageBlock = new ImageBlocks(req.body);
 
