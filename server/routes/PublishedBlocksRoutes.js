@@ -40,4 +40,25 @@ router.get("/published-data", async (req, res) => {
   }
 });
 
+router.get("/published-block/:id", async (req, res) => {
+  try {
+    const blockID = req.params.id;
+
+    const blockData = await PublishedBlocks.findById(blockID);
+
+    // console.log("blockData ---> ", blockData);
+    res.send({
+      success: true,
+      message: "block fetched by it ID :)",
+      data: blockData,
+    });
+  } catch (error) {
+    console.log(error);
+    res.send({
+      success: false,
+      message: "didn't get the data",
+    });
+  }
+});
+
 module.exports = router;
