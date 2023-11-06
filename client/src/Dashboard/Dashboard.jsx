@@ -88,14 +88,18 @@ const Dashboard = () => {
     <div className="dashboard-container flex justify-between">
       <div className="dash-blogs-container h-[100%] w-[100%] self-center ">
         {blockData.imageData.data && blockData.videoData.data ? (
-          <div className="w-[80%] flex flex-col justify-center align-center self-center ">
-            <h1 className="text-[1.5rem] font-bold">Welcome To Dashboard!!</h1>
-            <div className="w-[80%] flex flex-wrap gap-2 self-center items-center justify-center">
+          <div className="w-[80%] h-[100%] flex flex-col align-center justify-center">
+            <div className="dashboard-heading">
+              <h1 className="text-[1.5rem] font-bold">
+                Welcome To Dashboard!!
+              </h1>
+            </div>
+            <div className="w-[100%] flex flex-wrap gap-2 self-center items-center justify-center">
               {blockData.imageData.data.map((block, index) => {
                 return (
                   <div
                     key={index}
-                    className="w-[8rem] p-2 rounded-lg bg-slate-400 cursor-pointer"
+                    className="w-[8rem] h-[5rem] p-2 rounded-lg bg-slate-400 cursor-pointer flex justify-center items-center"
                     onClick={() => handleClick(block, "image")}
                   >
                     {block.title}
@@ -106,7 +110,7 @@ const Dashboard = () => {
                 return (
                   <div
                     key={index}
-                    className="w-[8rem] p-2 rounded-lg bg-slate-400 cursor-pointer"
+                    className="w-[8rem] h-[5rem] p-2 rounded-lg bg-slate-400 cursor-pointer flex justify-center items-center"
                     onClick={() => handleClick(block)}
                   >
                     {block.title}
