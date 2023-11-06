@@ -95,28 +95,38 @@ const Dashboard = () => {
               </h1>
             </div>
             <div className="w-[100%] flex flex-wrap gap-2 self-center items-center justify-center">
-              {blockData.imageData.data.map((block, index) => {
-                return (
-                  <div
-                    key={index}
-                    className="w-[8rem] h-[5rem] p-2 rounded-lg bg-slate-400 cursor-pointer flex justify-center items-center"
-                    onClick={() => handleClick(block, "image")}
-                  >
-                    {block.title}
-                  </div>
-                );
-              })}
-              {blockData.videoData.data.map((block, index) => {
-                return (
-                  <div
-                    key={index}
-                    className="w-[8rem] h-[5rem] p-2 rounded-lg bg-slate-400 cursor-pointer flex justify-center items-center"
-                    onClick={() => handleClick(block)}
-                  >
-                    {block.title}
-                  </div>
-                );
-              })}
+              <div className="flex gap-2">
+                <h2 className="text-2xl capitalize">images</h2>
+                <div className=" w-[90%] flex flex-wrap gap-1 justify-start items-center">
+                  {blockData.imageData.data.map((block, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className="w-[8rem] h-[5rem]  p-2 rounded-lg bg-slate-400 cursor-pointer flex justify-center items-center"
+                        onClick={() => handleClick(block, "image")}
+                      >
+                        {block.title}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <h2 className="text-2xl capitalize">videos</h2>
+                <div className=" w-[90%] flex flex-wrap gap-1 justify-start items-center">
+                  {blockData.videoData.data.map((block, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className="w-[8rem] h-[5rem] p-2 rounded-lg bg-slate-400 cursor-pointer flex justify-center items-center"
+                        onClick={() => handleClick(block)}
+                      >
+                        {block.title}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
           </div>
         ) : (
