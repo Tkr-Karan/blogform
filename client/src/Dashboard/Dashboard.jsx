@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./Dashboard.css";
-import Loader from "../Atom/Loader";
+
 import ReactPlayer from "react-player";
 import { useNavigate } from "react-router-dom";
 import { PublishedBlocks } from "../ApiCalls/blocks";
 import { ToastContainer, toast } from "react-toastify";
+import VideoImageSurvey from "../components/VideoImageSurvey";
 
 const Dashboard = () => {
   const [blockData, setBlockData] = useState({ imageData: {}, videoData: {} });
@@ -87,44 +88,12 @@ const Dashboard = () => {
   return (
     <div className="dashboard-container flex justify-between">
       <div className="dash-blogs-container h-[100%] w-[100%] self-center ">
-        {blockData.imageData.data && blockData.videoData.data ? (
-          <div className="w-[80%] flex flex-col justify-center align-center self-center ">
-            <h1 className="text-[1.5rem] font-bold">Welcome To Dashboard!!</h1>
-            <div className="w-[80%] flex flex-wrap gap-2 self-center items-center justify-center">
-              {blockData.imageData.data.map((block, index) => {
-                return (
-                  <div
-                    key={index}
-                    className="w-[8rem] p-2 rounded-lg bg-slate-400 cursor-pointer"
-                    onClick={() => handleClick(block, "image")}
-                  >
-                    {block.title}
-                  </div>
-                );
-              })}
-              {blockData.videoData.data.map((block, index) => {
-                return (
-                  <div
-                    key={index}
-                    className="w-[8rem] p-2 rounded-lg bg-slate-400 cursor-pointer"
-                    onClick={() => handleClick(block)}
-                  >
-                    {block.title}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        ) : (
-          // <div className="no-blogs">
-          //   <h1 className="text-[2rem] text-gray-400">No Blocks Yet!!</h1>
-          // </div>
-          <Loader />
-        )}
-
         {/* block complete details */}
+
+        <VideoImageSurvey blockData={blockData} handleClick={handleClick} />
+
         {isShow && (
-          <div className="block-details w-[40%] h-[100%] bg-slate-100 flex justify-center items-center relative">
+          <div className="block-details w-[60%] h-[100%] bg-slate-100 flex justify-center items-center relative">
             <div
               className="close absolute top-2 left-4 text-[1.3rem] cursor-pointer"
               onClick={handleClose}
