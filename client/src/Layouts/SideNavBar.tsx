@@ -16,7 +16,7 @@ const SideNavBar = () => {
   };
 
   useEffect(() => {
-    const AnayticsFetched = fetch("/api/analytics/get-analytics-data")
+    const AnalyticsFetched = fetch("/api/analytics/get-analytics-data")
       .then((res) => res.json())
       .then((data) => {
         setCount(data.data.length);

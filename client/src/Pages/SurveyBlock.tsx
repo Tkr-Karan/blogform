@@ -1,4 +1,4 @@
-import React, { useDebugValue, useState } from "react";
+import React, { useState } from "react";
 import "./Stylesheets/SurveyBlock.css";
 import { questionsTypes } from "../constants";
 import { useDispatch, useSelector } from "react-redux";
