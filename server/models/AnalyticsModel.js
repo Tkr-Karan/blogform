@@ -9,6 +9,15 @@ const AnalyticSchema = new mongoose.Schema(
     urls: {
       type: [String],
     },
+    startTime: {
+      type: String,
+    },
+    endTime: {
+      type: String,
+    },
+    blockType: {
+      type: String,
+    },
   },
   {
     timestamps: true,
