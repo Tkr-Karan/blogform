@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import "./Stylesheets/SurveyBlock.css";
+import { questionsTypes } from "../constants";
+import { useDispatch, useSelector } from "react-redux";
+import { setIsCreating } from "../store/surveySlice";
 
 const SurveyBlock = () => {
-  const [isCreating, setIsCreating] = useState(false);
+  const isCreating = useSelector((state : any) => state.survey.isCreating);
+  const dispatch = useDispatch();
 
   const handleCreation = () => {
-    setIsCreating(!isCreating);
+    dispatch(setIsCreating(isCreating));
   };
 
   const handleType = (val) => {
@@ -32,24 +36,17 @@ const SurveyBlock = () => {
               <div className="survey-questions">
                 <p>Select the questions type</p>
                 <div className="questions-type flex gap-2">
-                  <p
-                    className="cursor-pointer p-1 bg-stone-400 rounded-md w-[50%] text-[.8rem]"
-                    onClick={() => handleType("input")}
-                  >
-                    Input
-                  </p>
-                  <p
-                    className="cursor-pointer p-1 bg-stone-400 rounded-md w-[50%] text-[.8rem]"
-                    onClick={() => handleType("checkbox")}
-                  >
-                    Checkbox
-                  </p>{" "}
-                  <p
-                    className="cursor-pointer p-1 bg-stone-400 rounded-md w-[50%] text-[.8rem]"
-                    onClick={() => handleType("radio")}
-                  >
-                    Radio
-                  </p>
+                  {questionsTypes.map((type, idx) => {
+                    return (
+                      <p
+                        className="cursor-pointer p-1 bg-stone-400 rounded-md w-[50%] text-[.8rem]"
+                        onClick={() => handleType(type)}
+                        key={idx}
+                      >
+                        {type}
+                      </p>
+                    );
+                  })}
                 </div>
               </div>
             </form>
