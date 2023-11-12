@@ -15,6 +15,15 @@ export default function AnalyticsBlockTest() {
       videoRefs.current.seekTo(parseFloat(startTime));
     }
   };
+
+  const handleEnded = (progress) => {
+    if (progress.playedSeconds >= analyticData.endTime) {
+      if (videoRefs.current) {
+        videoRefs.current.getInternalPlayer().pause();
+      }
+    }
+  };
+
   const AnayticsFetched = async (blockId) => {
     try {
       const response = await fetch(
@@ -34,33 +43,53 @@ export default function AnalyticsBlockTest() {
   return (
     <div className="w-[100vw] h-[100vh] flex justify-center items-center">
       {analyticData && (
-        <div className="flex flex-wrap gap-2 w-[90%] justify-center items-center">
+        <div className="flex flex-wrap gap-2 w-[90%] justify-center items-start h-[100%]">
           <div
-            className="bg-orange-400/30 p-2 mt-1 rounded-lg cursor-pointer"
+            className="w-[100%] p-2 mt-1 rounded-lg cursor-pointer capitalize font-bold text-[1.5rem] flex flex-col justify-center items-center"
             key={analyticData._id}
           >
-            {analyticData.title}
+            <p className="self-start">{analyticData.title}</p>
 
             {analyticData.blockType === "image" && (
-              <div>
+              <div className="h-[90vh] flex gap-2 self-center justify-center items-center">
                 {analyticData.urls.map((imgPath, idx) => {
-                  return <img key={idx} src={imgPath} alt="" />;
+                  return (
+                    <div className="w-[200px] h-[200px]">
+                      <img
+                        key={idx}
+                        src={imgPath}
+                        alt=""
+                        width={200}
+                        className="object-cover h-[100%]"
+                      />
+                    </div>
+                  );
                 })}
               </div>
             )}
             {analyticData.blockType === "video" && (
-              <div className="w-[100%] h-[100%]">
+              <div className="w-[100%] h-[90vh] flex flex-col justify-center items-center self-center gap-2">
                 <ReactPlayer
                   url={analyticData.urls}
                   controls={true}
-                  width={200}
+                  width={400}
                   height={200}
                   ref={videoRefs}
                   onStart={handleOnReady(
                     analyticData._id,
                     analyticData.startTime
                   )}
+                  onProgress={handleEnded}
                 />
+
+                <p className="font-thin text-[1rem] bg-red-100 p-1">
+                  {" "}
+                  user like the video from{" "}
+                  <span className="font-bold">
+                    {analyticData.startTime}s
+                  </span>{" "}
+                  to <span className="font-bold">{analyticData.endTime}s</span>
+                </p>
               </div>
             )}
           </div>
