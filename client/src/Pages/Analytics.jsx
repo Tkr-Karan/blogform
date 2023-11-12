@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import ReactPlayer from "react-player";
 import { useNavigate } from "react-router-dom";
+import Loader from "../Atom/Loader";
 
 const Analytics = () => {
   const [analyticData, setAnalyticData] = useState(null);
@@ -20,7 +21,7 @@ const Analytics = () => {
 
   return (
     <div className="w-[100%] h-[100%] flex justify-center items-center">
-      {analyticData && (
+      {analyticData ? (
         <div className="flex flex-wrap gap-2 w-[90%]">
           {Object.keys(analyticData).map((block) => {
             return (
@@ -46,6 +47,8 @@ const Analytics = () => {
             );
           })}
         </div>
+      ) : (
+        <Loader />
       )}
     </div>
   );
