@@ -1,11 +1,26 @@
-export default function InputField() {
+import { useRef, useState } from "react";
+
+export default function InputField(props) {
+
+    const {getData} = props
+
+  const [inputData, setInputData] = useState("");
+  const contentEditableRef = useRef(null);
+
+  const handleInputChange = (e) => {
+    console.log(e.target.value);
+    setInputData(e.target.value);
+
+    getData(e.target.value)
+  };
   return (
-    <div>
-      <p
-        className="outline-none border-none text-gray-700/40 p-1 text-lg bg-slate-400/10"
-        contentEditable="true"
-        placeholder="here is your survey add the question?"
-      ></p>
+    <div className="mt-1 ">
+      <input
+        className="bg-slate-500/10 p-2 w-[20rem]"
+        type="text"
+        value={inputData}
+        onChange={(e) => handleInputChange(e)}
+      />
     </div>
   );
 }

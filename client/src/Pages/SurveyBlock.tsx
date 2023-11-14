@@ -10,21 +10,103 @@ import { RadioFields } from "../Molecules/RadioFields";
 const SurveyBlock = () => {
   const isCreating = useSelector((state: any) => state.survey.isCreating);
   const dispatch = useDispatch();
-  const [selectedType, setSlectedType] = useState("");
   const [showType, setShowType] = useState(false);
-  const [questions, setQuestions] = useState([]);
+  const [questions, setQuestions] = useState<any>([]);
+  const [selectedType, setSelectedType] = useState("");
+  const [inputData, setInputData] = useState<string[]>([]);
+  const [surveyTitle, setSurveyTitle] = useState("");
+  const [surveyDescription, setSurveyDescription] = useState("");
+
+  const [questionsData, setQuestionsData] = useState<any>([]);
 
   const handleCreation = () => {
     dispatch(setIsCreating(isCreating));
   };
+  const handleAddQuestion = (type) => {
+    setSelectedType(type);
+    setQuestions([...questions, type]);
+    // setInputData([...inputData, ""]);
+    setQuestionsData([...questionsData, { type, data: "" }]);
 
-  const handleType = (val) => {
-    setSlectedType(val);
     setShowType(false);
   };
+  // const renderSurveyBlock = () => {
+  //   return props.surveyBlock.Questions.map((type) => {
+  //     if(val === checkbox) {
+  //       return <Checkbox />
+  //     }
+  //   })
 
-  const handleAddQuestion = () => {
+  const handleQuestionType = () => {
     setShowType(true);
+  };
+
+  const handleSurveySubmit = () => {
+    const formData = {
+      title: surveyTitle,
+      description: surveyDescription,
+      questionsData,
+    };
+
+    console.log(formData);
+  };
+  const getData = (data) => {
+    console.log(data);
+  };
+
+  const handleInputChange = (index, value) => {
+    const updatedInputData = [...inputData];
+    updatedInputData[index] = value;
+
+    const updatedQuestionsData = [...questionsData];
+    updatedQuestionsData[index].data = value;
+
+    setInputData(updatedInputData);
+    setQuestionsData(updatedQuestionsData);
+  };
+
+  const handleCheckBoxData = (index, data) => {
+    const updatedQuestionsData = [...questionsData];
+    updatedQuestionsData[index] = { type: "checkbox", data };
+    setQuestionsData(updatedQuestionsData);
+  };
+
+  const handleRadioData = (index, data) => {
+    const updatedQuestionsData = [...questionsData];
+    updatedQuestionsData[index] = { type: "radio", data };
+    setQuestionsData(updatedQuestionsData);
+  };
+
+  const renderSurveyBlock = () => {
+    return (
+      <div className="survey-questions">
+        {questions.map((question, idx) => (
+          <div key={idx}>
+            {question === "input" ? (
+              <InputField
+                key={idx}
+                index={idx}
+                value={inputData[idx]}
+                getData={(value) => handleInputChange(idx, value)}
+              />
+            ) : question === "checkbox" ? (
+              <CheckBox
+                key={idx}
+                index={idx}
+                getData={(value) => handleCheckBoxData(idx, value)}
+              />
+            ) : question === "radio" ? (
+              <RadioFields
+                key={idx}
+                getData={(data) => handleRadioData(idx, data)}
+              />
+            ) : (
+              <p>{question}</p>
+            )}
+          </div>
+        ))}
+      </div>
+    );
   };
 
   return (
@@ -37,62 +119,57 @@ const SurveyBlock = () => {
             <form className="survey-form">
               <div className="survey-name">
                 <label> Title: </label>
-                <input type="text" />
+                <input
+                  type="text"
+                  value={surveyTitle}
+                  onChange={(e) => setSurveyTitle(e.target.value)}
+                />
               </div>
               <div className="survey-description">
                 <label> Description: </label>
-                <input type="text" />
+                <input
+                  type="text"
+                  value={surveyDescription}
+                  onChange={(e) => setSurveyDescription(e.target.value)}
+                />
               </div>
 
-              <div>
-                {selectedType == "input" ? (
-                  <InputField />
-                ) : selectedType == "checkbox" ? (
-                  <CheckBox />
-                ) : selectedType == "radio" ? (
-                  <RadioFields />
-                ) : (
-                  // <div>
-                  //   {" "}
-                  //   ques :{" "}
-                  //   <span>
-                  //     {" "}
-                  //     <input type="text" name="" id="" />{" "}
-                  //   </span>{" "}
-                  //   <i
-                  //     className="fa-solid fa-plus cursor-pointer"
-                  //     onClick={() => handleType("input")}
-                  //   ></i>
-                  // </div>
-                  <div className="survey-questions">
-                    <div className="questions-type flex gap-2 relative">
-                      {showType && (
-                        <div className="flex flex-col gap-1 absolute -right-20 bg-lime-100 p-3">
-                          {questionsTypes.map((type, idx) => {
-                            return (
-                              <p
-                                className="cursor-pointer p-1 bg-stone-400 rounded-md w-[100%] text-[.8rem] hover:bg-teal-200"
-                                onClick={() => handleType(type)}
-                                key={idx}
-                              >
-                                {type}
-                              </p>
-                            );
-                          })}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
-              </div>
+              <div>{renderSurveyBlock()}</div>
             </form>
 
-            <div className="add-question flex justify-center items-center gap-2">
-              <p>Select the questions type</p>
+            {questions.length < 5 && (
               <i
-                className="fa-solid fa-plus p-2 rounded-md bg-orange-200 cursor-pointer"
-                onClick={handleAddQuestion}
+                className="fa-solid fa-plus p-2 rounded-md bg-orange-200 cursor-pointer mt-2 "
+                onClick={handleQuestionType}
               ></i>
+            )}
+
+            <div className="add-question flex justify-center items-center gap-2">
+              {showType && (
+                <div className="questions-type flex gap-2 relative">
+                  {/* <div>
+                    {" "}
+                    <p>Select the questions type</p>
+                  </div> */}
+                  {questions.length < 5 && (
+                    <div className="flex gap-1 absolute -right-60 -top-8 bg-lime-100 p-3">
+                      {questionsTypes.map((type, idx) => (
+                        <p
+                          className="cursor-pointer p-1 bg-stone-400 rounded-md w-[100%] text-[.8rem] hover:bg-teal-200"
+                          onClick={() => {
+                            // handleType(type);
+                            handleAddQuestion(type);
+                            // Close the options list after selecting a type
+                          }}
+                          key={idx}
+                        >
+                          {type}
+                        </p>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -108,7 +185,21 @@ const SurveyBlock = () => {
           </div>
         </div>
       )}
+
+      {questions.length >= 5 && (
+        <div
+          className="submit bg-slate-400 p-2 rounded-md cursor-pointer mt-3"
+          onClick={handleSurveySubmit}
+        >
+          submit
+        </div>
+      )}
+      {/* {renderSurveyBlock()} */}
     </div>
+
+    // <div>
+    //   {renderSurveyBlock()}
+    // </div>
   );
 };
 
