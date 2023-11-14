@@ -92,6 +92,28 @@ export default function AnalyticsBlockTest() {
                 </p>
               </div>
             )}
+            {analyticData.blockType == "survey" && (
+              <div>
+                {Object.keys(analyticData.surveyResponses).map(
+                  (question, idx) => {
+                    return (
+                      <div key={idx} className="flex">
+                        {question} :
+                        {!Array.isArray(
+                          analyticData.surveyResponses[question]
+                        ) ? (
+                          analyticData.surveyResponses[question]
+                        ) : (
+                          <div>
+                            {analyticData.surveyResponses[question].join("/")}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  }
+                )}
+              </div>
+            )}
           </div>
         </div>
       )}

@@ -39,3 +39,14 @@ export const PublishedBlocks = async (payload) => {
     return error;
   }
 };
+
+
+export const SurveyBlocks = async (payload) => {
+  try {
+    const response = await axiosInstance.post('/api/survey/survey-blocks', payload);
+    return response.data
+  } catch (error) {
+    return error
+    
+  }
+}

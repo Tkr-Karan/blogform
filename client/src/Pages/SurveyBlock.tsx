@@ -6,6 +6,8 @@ import { setIsCreating } from "../store/surveySlice";
 import InputField from "../Molecules/InputField";
 import { CheckBox } from "../Molecules/CheckBox";
 import { RadioFields } from "../Molecules/RadioFields";
+import { SurveyBlocks } from "../ApiCalls/blocks";
+import { ToastContainer, toast } from "react-toastify";
 
 const SurveyBlock = () => {
   const isCreating = useSelector((state: any) => state.survey.isCreating);
@@ -41,7 +43,7 @@ const SurveyBlock = () => {
     setShowType(true);
   };
 
-  const handleSurveySubmit = () => {
+  const handleSurveySubmit = async () => {
     const formData = {
       title: surveyTitle,
       description: surveyDescription,
@@ -49,6 +51,14 @@ const SurveyBlock = () => {
     };
 
     console.log(formData);
+
+    const res = await SurveyBlocks(formData);
+
+    if (res.success) {
+      toast.success("survey block added successfully");
+    } else {
+      toast.error("survey blocks failed!!");
+    }
   };
   const getData = (data) => {
     console.log(data);
@@ -192,6 +202,7 @@ const SurveyBlock = () => {
           onClick={handleSurveySubmit}
         >
           submit
+          <ToastContainer />
         </div>
       )}
       {/* {renderSurveyBlock()} */}

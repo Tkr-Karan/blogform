@@ -18,6 +18,7 @@ const AnalyticSchema = new mongoose.Schema(
     blockType: {
       type: String,
     },
+    surveyResponses: { type: Object },
   },
   {
     timestamps: true,
