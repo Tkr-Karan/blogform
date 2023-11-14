@@ -14,6 +14,9 @@ const SurveyBlockSchema = new mongoose.Schema(
     questionsData: {
       type: Object,
     },
+    blockType: {
+      type: { type: String, default: "survey" },
+    },
   },
   { timestamps: true }
 );

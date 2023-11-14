@@ -16,18 +16,20 @@ const Dashboard = () => {
 
   const fetchingBlockData = async () => {
     try {
-      const [imageResponse, videoResponse] = await Promise.all([
+      const [imageResponse, videoResponse, surveyResponse] = await Promise.all([
         fetch("/api/image/get-image-block-data"),
         fetch("/api/video/get-video-block-data"),
+        fetch("/api/survey/get-survey-block-data"),
       ]);
 
       const imageData = await imageResponse.json();
       const videoData = await videoResponse.json();
+      const surveyData = await surveyResponse.json();
 
       // console.log("imageData -->", imageData);
       // console.log("videoData -->", videoData);
 
-      setBlockData({ imageData, videoData });
+      setBlockData({ imageData, videoData, surveyData });
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -62,7 +64,8 @@ const Dashboard = () => {
     title,
     description,
     imageUrl,
-    videoUrl
+    videoUrl,
+    questions
   ) => {
     try {
       const published = {
@@ -70,8 +73,10 @@ const Dashboard = () => {
         description: description,
         blockType: type,
         urls: type === "image" ? imageUrl : videoUrl,
+        questionsData: questions,
       };
 
+      console.log(published);
       const res = await PublishedBlocks(published);
 
       if (res.success) {
@@ -121,7 +126,7 @@ const Dashboard = () => {
                         />
                       ))}
                     </div>
-                  ) : (
+                  ) : currentData[curr].blockType.type === "video" ? (
                     <div className="flex flex-wrap gap-2 justify-center items-center">
                       <ReactPlayer
                         // key={sq}
@@ -132,6 +137,8 @@ const Dashboard = () => {
                         controls={true}
                       />
                     </div>
+                  ) : (
+                    <div>{}</div>
                   )}
                   {/* blocks actions buttons */}
                   <div className="actions-btn self-center flex gap-4">
@@ -145,7 +152,8 @@ const Dashboard = () => {
                           currentData[curr].title,
                           currentData[curr].description,
                           currentData[curr].imageUrl,
-                          currentData[curr].videoUrl
+                          currentData[curr].videoUrl,
+                          currentData[curr].questionsData
                         )
                       }
                     >

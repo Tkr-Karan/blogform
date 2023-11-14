@@ -20,4 +20,20 @@ router.post("/survey-blocks", async (req, res) => {
   }
 });
 
+router.get("/get-survey-block-data", async (req, res) => {
+  try {
+    const SurveyData = await SurveyBlock.find();
+    res.send({
+      success: true,
+      message: "Survey Block data fetched successfully",
+      data: SurveyData,
+    });
+  } catch (error) {
+    res.send({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
 module.exports = router;

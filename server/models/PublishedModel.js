@@ -13,14 +13,15 @@ const publishedSchema = new mongoose.Schema(
     urls: {
       type: [String],
     },
+    questionsData: {
+      type: Object,
+    },
     blockType: {
       type: String,
-      required  : true
+      required: true,
     },
   },
   { timestamps: true }
 );
-
-
 
 module.exports = mongoose.model("PublishedBlock", publishedSchema);
