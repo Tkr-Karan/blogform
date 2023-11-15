@@ -15,12 +15,15 @@ export const CheckBox = ({ getData, index }) => {
   };
 
   const handleOptionChange = (optionId, newText) => {
+    // console.log("newText ", newText);
     const updatedOptions = question.options.map((option) =>
       option.id === optionId ? { ...option, text: newText } : option
     );
     setQuestion({ ...question, options: updatedOptions });
     updateData();
   };
+
+  // console.log(question, "question");
 
   //   const handleDataChange = (optionId, newText) => {
   //     const updatedOptions = options.map((option) =>
@@ -37,6 +40,7 @@ export const CheckBox = ({ getData, index }) => {
       description: question.description,
       options: question.options.map((option) => option.text),
     };
+    // console.log(data, "data");
     getData(data);
   };
 

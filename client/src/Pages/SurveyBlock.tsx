@@ -60,9 +60,9 @@ const SurveyBlock = () => {
       toast.error("survey blocks failed!!");
     }
   };
-  const getData = (data) => {
-    console.log(data);
-  };
+  // const getData = (data) => {
+  //   console.log(data);
+  // };
 
   const handleInputChange = (index, value) => {
     const updatedInputData = [...inputData];
@@ -76,9 +76,13 @@ const SurveyBlock = () => {
   };
 
   const handleCheckBoxData = (index, data) => {
-    const updatedQuestionsData = [...questionsData];
+    // console.log(data, "hhhhh")
+    setQuestionsData(prevQuestionsData => {
+    const updatedQuestionsData = [...prevQuestionsData];
     updatedQuestionsData[index] = { type: "checkbox", data };
-    setQuestionsData(updatedQuestionsData);
+    // console.log("efree", updatedQuestionsData)
+    return updatedQuestionsData;
+  });
   };
 
   const handleRadioData = (index, data) => {
@@ -86,6 +90,7 @@ const SurveyBlock = () => {
     updatedQuestionsData[index] = { type: "radio", data };
     setQuestionsData(updatedQuestionsData);
   };
+  // console.log(questionsData, "questionsData123");
 
   const renderSurveyBlock = () => {
     return (

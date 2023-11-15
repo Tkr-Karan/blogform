@@ -57,9 +57,10 @@ const ImageBlock = () => {
       if (files.length + newFiles.length <= 4) {
         const updatedFiles = [...files, ...newFiles];
         setFiles(updatedFiles);
-      } else {
-        alert("You can only upload up to 4 images.");
       }
+      // } else {
+      //   alert("You can only upload up to 4 images.");
+      // }
     }
 
     // console.log("image files ==> ", files)
