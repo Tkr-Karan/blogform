@@ -62,9 +62,6 @@ export default function VideoImageSurvey(props) {
           </div>
         </div>
       ) : (
-        // <div className="no-blogs">
-        //   <h1 className="text-[2rem] text-gray-400">No Blocks Yet!!</h1>
-        // </div>
         <Loader />
       )}
     </div>

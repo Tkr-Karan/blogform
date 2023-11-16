@@ -31,18 +31,6 @@ const Analytics = () => {
                 onClick={() => goToTestBlock(analyticData[block]._id)}
               >
                 {analyticData[block].title}
-
-                {/* <ReactPlayer
-                  url={analyticData[block].urls}
-                  controls={true}
-                  width={200}
-                  height={200}
-                  ref={videoRefs}
-                  onStart={handleOnReady(
-                    analyticData[block]._id,
-                    analyticData[block].startTime
-                  )}
-                /> */}
               </div>
             );
           })}

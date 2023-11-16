@@ -31,9 +31,9 @@ const ImageBlock = () => {
 
       const res = await ImagesBlocks(imageBlockData);
       if (res.success) {
-        toast.success("Image survey dded successfully")
+        toast.success("Image survey dded successfully");
       } else {
-        toast.error("Image survey failed!")
+        toast.error("Image survey failed!");
       }
 
       // console.log("imaageBlockData: ", imageBlockData);
@@ -153,6 +153,7 @@ const ImageBlock = () => {
 
                 {files.length < 4 && (
                   <input
+                    style={{border: "none"}}
                     type="file"
                     accept="image/*"
                     onChange={handleFileChange}
