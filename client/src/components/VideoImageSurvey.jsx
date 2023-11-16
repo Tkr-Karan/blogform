@@ -3,9 +3,9 @@ import Loader from "../Atom/Loader";
 export default function VideoImageSurvey(props) {
   const { blockData, handleClick } = props;
   return (
-    <div style={{ marginLeft: "3rem" }}>
+    <div style={{ marginLeft: "3rem", width:"80%" }}>
       {blockData.imageData.data && blockData.videoData.data && blockData.surveyData.data ? (
-        <div className="w-[80%] h-[100%] flex flex-col align-center justify-center">
+        <div className="w-[100%] h-[100%] flex flex-col align-center justify-center">
           <div className="dashboard-heading">
             <h1 className="text-[1.5rem] font-bold">Welcome To Dashboard!!</h1>
           </div>

@@ -98,7 +98,7 @@ const Dashboard = () => {
         <VideoImageSurvey blockData={blockData} handleClick={handleClick} />
 
         {isShow && (
-          <div className="block-details w-[60%] h-[100%] bg-slate-100 flex justify-center items-center relative">
+          <div className="block-details w-[40%] h-[100%] bg-slate-100 flex justify-center items-center relative">
             <div
               className="close absolute top-2 left-4 text-[1.3rem] cursor-pointer"
               onClick={handleClose}
