@@ -20,6 +20,7 @@ const SurveyBlock = () => {
   const [surveyDescription, setSurveyDescription] = useState("");
 
   const [questionsData, setQuestionsData] = useState<any>([]);
+  const [count, setCount] = useState(1);
 
   const handleCreation = () => {
     dispatch(setIsCreating(isCreating));
@@ -32,15 +33,9 @@ const SurveyBlock = () => {
 
     setShowType(false);
   };
-  // const renderSurveyBlock = () => {
-  //   return props.surveyBlock.Questions.map((type) => {
-  //     if(val === checkbox) {
-  //       return <Checkbox />
-  //     }
-  //   })
 
   const handleQuestionType = () => {
-    setShowType(true);
+    setShowType(!showType);
   };
 
   const handleSurveySubmit = async () => {
@@ -94,9 +89,9 @@ const SurveyBlock = () => {
 
   const renderSurveyBlock = () => {
     return (
-      <div className="survey-questions">
+      <div className="survey-questions flex flex-col gap-2 items-start ">
         {questions.map((question, idx) => (
-          <div key={idx}>
+          <div key={idx} className="">
             {question === "input" ? (
               <InputField
                 key={idx}
@@ -128,46 +123,46 @@ const SurveyBlock = () => {
     <div className="survey-block-container ">
       {isCreating ? (
         <div>
-          <h2>Survey Form Creation</h2>
+          <div >
+            <h2>Survey Form Creation</h2>
+          </div>
 
-          <div className="survey-form-container">
-            <form className="survey-form">
-              <div className="survey-name">
+          <div className="survey-form-container  p-2 rounded-lg bg-green-100 shadow-slate-600 border-1 border-solid flex gap-3 relative ">
+            <form className="w-[30rem] survey-form flex flex-col gap-2 items-start">
+              <div className="survey-name w-[100%] flex justify-between">
                 <label> Title: </label>
                 <input
                   type="text"
                   value={surveyTitle}
                   onChange={(e) => setSurveyTitle(e.target.value)}
+                  className="w-[70%] pl-3"
                 />
               </div>
-              <div className="survey-description">
+              <div className="survey-description w-[100%] flex justify-between">
                 <label> Description: </label>
                 <input
                   type="text"
                   value={surveyDescription}
                   onChange={(e) => setSurveyDescription(e.target.value)}
+                  className="w-[70%] pl-3"
                 />
               </div>
 
-              <div>{renderSurveyBlock()}</div>
+              {renderSurveyBlock()}
             </form>
 
             {questions.length < 5 && (
               <i
-                className="fa-solid fa-plus p-2 rounded-md bg-orange-200 cursor-pointer mt-2 "
+                className="fa-solid fa-plus p-2 rounded-md bg-orange-200 cursor-pointer mt-2 h-[2rem]  "
                 onClick={handleQuestionType}
               ></i>
             )}
 
             <div className="add-question flex justify-center items-center gap-2">
               {showType && (
-                <div className="questions-type flex gap-2 relative">
-                  {/* <div>
-                    {" "}
-                    <p>Select the questions type</p>
-                  </div> */}
+                <div className="questions-type flex gap-2">
                   {questions.length < 5 && (
-                    <div className="flex gap-1 absolute -right-60 -top-8 bg-lime-100 p-3">
+                    <div className="flex gap-1 absolute -right-[13rem] top-[0.5rem] bg-lime-100 p-3 align-top">
                       {questionsTypes.map((type, idx) => (
                         <p
                           className="cursor-pointer p-1 bg-stone-400 rounded-md w-[100%] text-[.8rem] hover:bg-teal-200"
@@ -210,12 +205,7 @@ const SurveyBlock = () => {
           <ToastContainer />
         </div>
       )}
-      {/* {renderSurveyBlock()} */}
     </div>
-
-    // <div>
-    //   {renderSurveyBlock()}
-    // </div>
   );
 };
 

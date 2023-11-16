@@ -14,12 +14,13 @@ export default function InputField(props) {
     getData(e.target.value)
   };
   return (
-    <div className="mt-1 ">
+    <div className="mt-1  ">
       <input
-        className="bg-slate-500/10 p-2 w-[20rem]"
+        className="bg-slate-500/10 p-2 w-[30rem]"
         type="text"
         value={inputData}
         onChange={(e) => handleInputChange(e)}
+        placeholder="please enter your question?"
       />
     </div>
   );

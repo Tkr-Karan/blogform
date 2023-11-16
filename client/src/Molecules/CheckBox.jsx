@@ -10,7 +10,11 @@ export const CheckBox = ({ getData, index }) => {
   });
 
   const handleQuestionChange = (e) => {
-    setQuestion({ ...question, description: e.target.value });
+    console.log(e.target.value);
+    const newDesc = e.target.value;
+    console.log(newDesc);
+    setQuestion({ ...question, description: newDesc });
+    console.log(question.description);
     updateData();
   };
 
@@ -20,32 +24,20 @@ export const CheckBox = ({ getData, index }) => {
       option.id === optionId ? { ...option, text: newText } : option
     );
     setQuestion({ ...question, options: updatedOptions });
-    updateData();
+    console.log("desc", updatedOptions);
+    updateData(updatedOptions);
   };
-
-  // console.log(question, "question");
-
-  //   const handleDataChange = (optionId, newText) => {
-  //     const updatedOptions = options.map((option) =>
-  //       option.id === optionId ? { ...option, text: newText } : option
-  //     );
-  //     setOptions(updatedOptions);
-
-  //     const data = updatedOptions.map((option) => option.text);
-  //     getData(data);
-  //   };
-
-  const updateData = () => {
+  
+  const updateData = (options) => {
     const data = {
       description: question.description,
-      options: question.options.map((option) => option.text),
+      options: options != undefined && options.map((option) => option.text),
     };
-    // console.log(data, "data");
     getData(data);
   };
 
   return (
-    <div>
+    <div className="flex flex-col gap-2">
       <div>
         <label>
           <input
@@ -53,17 +45,15 @@ export const CheckBox = ({ getData, index }) => {
             value={question.description}
             onChange={handleQuestionChange}
             placeholder="Select the checkbox questions"
+            className="w-[30rem] bg-slate-500/10 p-2"
           />
         </label>
       </div>
-      {/* <p contentEditable="true" onInput={handleQuestionChange}>
-        {question.description || "Select the checkbox questions"}
-      </p> */}
       {question.options.map((option) => (
-        <div className="flex" key={option.id}>
-          <input type="checkbox" />{" "}
+        <div className="flex gap-2" key={option.id}>
+          <input type="checkbox" className="" />{" "}
           <input
-            className="w-10rem"
+            className="w-[25rem] pl-2"
             type="text"
             // onFocus={(e) => handleFocus(e)}
             onChange={(e) => handleOptionChange(option.id, e.target.value)}
