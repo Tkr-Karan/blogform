@@ -11,6 +11,8 @@ const Dashboard = () => {
   const [blockData, setBlockData] = useState({ imageData: {}, videoData: {} });
   const [isShow, setIsShow] = useState(false);
   const [currentData, setCurrentData] = useState({ data: {} });
+  const [isLoading, setIsLoading] = useState(false);
+  const [publishStatus, setPublishStatus] = useState({}); // Changed to an object
 
   const navigate = useNavigate();
 
@@ -68,12 +70,14 @@ const Dashboard = () => {
     questions
   ) => {
     try {
+      setIsLoading(true);
       const published = {
         title: title,
         description: description,
         blockType: type,
         urls: type === "image" ? imageUrl : videoUrl,
         questionsData: questions,
+        isPublished: true,
       };
 
       console.log(published);
@@ -82,11 +86,17 @@ const Dashboard = () => {
       if (res.success) {
         console.log(`http://localhost:3001/published/${type}/${id}`);
         toast.success("block published successfully");
+        setPublishStatus((prevStatus) => ({
+          ...prevStatus,
+          [id]: true, // Set the published status for the clicked block
+        }));
       } else {
         toast.error("try after some time facinf some issue!!");
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -107,6 +117,7 @@ const Dashboard = () => {
             </div>
 
             {Object.keys(currentData).map((curr, indx) => {
+              const id = currentData[curr]._id;
               return (
                 <div
                   key={indx}
@@ -142,11 +153,13 @@ const Dashboard = () => {
                   )}
                   {/* blocks actions buttons */}
                   <div className="actions-btn self-center flex gap-4">
-                    <div
-                      className="w-[100%] publish rounded-md bg-emerald-500 p-3 cursor-pointer font-bold"
+                    <button
+                      className={`w-[100%] publish rounded-md p-3 cursor-pointer font-bold ${
+                        publishStatus[id] ? "bg-gray-500/20" : "bg-emerald-500"
+                      }`}
                       onClick={() =>
                         generateShareableLink(
-                          currentData[curr]._id,
+                          !publishStatus[id] && currentData[curr]._id,
                           currentData[curr].blockType.type,
                           currentData[curr],
                           currentData[curr].title,
@@ -156,13 +169,20 @@ const Dashboard = () => {
                           currentData[curr].questionsData
                         )
                       }
+                      disabled={publishStatus[id]}
                     >
-                      <button>Publish</button>
+                      {publishStatus[id] ? (
+                        <div>Published</div>
+                      ) : isLoading ? (
+                        <div>Publishing...</div>
+                      ) : (
+                        <button>Publish</button>
+                      )}
                       <ToastContainer />
-                    </div>
+                    </button>
 
                     <div
-                      className="analytics w-[100%] rounded-md bg-slate-500 p-3 text-white cursor-pointer font-bold"
+                      className="analytics w-[100%] rounded-md bg-orange-300 p-3 text-black cursor-pointer font-bold"
                       onClick={handleAnalytics}
                     >
                       <button>Analytics</button>
