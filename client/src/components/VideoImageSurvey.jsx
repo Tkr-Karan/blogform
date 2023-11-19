@@ -3,13 +3,15 @@ import Loader from "../Atom/Loader";
 export default function VideoImageSurvey(props) {
   const { blockData, handleClick } = props;
   return (
-    <div style={{ marginLeft: "3rem", width:"80%" }}>
-      {blockData.imageData.data && blockData.videoData.data && blockData.surveyData.data ? (
-        <div className="w-[100%] h-[100%] flex flex-col align-center justify-center">
+    <div style={{ marginLeft: "3rem", width: "80%" }}>
+      {blockData.imageData.data &&
+      blockData.videoData.data &&
+      blockData.surveyData.data ? (
+        <div className="w-[100%] h-[100%] flex flex-col gap-4 align-center justify-center">
           <div className="dashboard-heading">
             <h1 className="text-[1.5rem] font-bold">Welcome To Dashboard!!</h1>
           </div>
-          <div className="w-[100%] flex flex-wrap gap-2 self-center items-center justify-center">
+          <div className="w-[100%] flex flex-wrap gap-4 self-center items-center justify-center">
             <div className=" flex gap-2" style={{ width: "100%" }}>
               <h2 className="text-2xl capitalize">images</h2>
               <div className=" w-[90%] flex flex-wrap gap-1 justify-start items-center">
@@ -58,7 +60,6 @@ export default function VideoImageSurvey(props) {
                 })}
               </div>
             </div>
-            
           </div>
         </div>
       ) : (

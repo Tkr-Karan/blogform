@@ -9,6 +9,8 @@ const ImageBlock = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [files, setFiles] = useState<File[]>([]);
+  const [isSaved, setIsSaved] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [imageURL, setImageURL] = useState<string[]>([]);
 
@@ -20,6 +22,7 @@ const ImageBlock = () => {
     e.preventDefault();
 
     try {
+      setIsLoading(true);
       const base64Images = await convertImagesToBase64(imageURL);
 
       // console.log(base64Images);
@@ -32,6 +35,7 @@ const ImageBlock = () => {
       const res = await ImagesBlocks(imageBlockData);
       if (res.success) {
         toast.success("Image survey dded successfully");
+        setIsSaved(true);
       } else {
         toast.error("Image survey failed!");
       }
@@ -41,7 +45,13 @@ const ImageBlock = () => {
       setTitle("");
       setDescription("");
       setFiles([]);
-    } catch (error) {}
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+      setTimeout(() => {
+        setIsCreating(false);
+      }, 4000);
+    }
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -154,7 +164,7 @@ const ImageBlock = () => {
 
                 {files.length < 4 && (
                   <input
-                    style={{border: "none"}}
+                    style={{ border: "none" }}
                     type="file"
                     accept="image/*"
                     onChange={handleFileChange}
@@ -164,10 +174,16 @@ const ImageBlock = () => {
             </div>
 
             <button
-              className="save-btn self-end w-16 bottom-0 right-0 mb-2 mr-4 bg-blue-600 p-2 rounded-xl cursor-pointer text-white"
+              className="save-btn self-end w-[8rem] bottom-0 right-0 mb-2 mr-4 bg-blue-600 p-2 rounded-xl cursor-pointer text-white"
               type="submit"
             >
-              Save
+              {isSaved ? (
+                <div>Saved</div>
+              ) : isLoading ? (
+                <div>saving...</div>
+              ) : (
+                <button>Save</button>
+              )}
             </button>
             <ToastContainer />
           </form>
