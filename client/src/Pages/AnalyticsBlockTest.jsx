@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 
 export default function AnalyticsBlockTest() {
   const [analyticData, setAnalyticData] = useState(null);
+  const [questionNumber, setQuestionNumber] = useState(1);
 
   const videoRefs = useRef(null);
 
@@ -93,21 +94,43 @@ export default function AnalyticsBlockTest() {
               </div>
             )}
             {analyticData.blockType == "survey" && (
-              <div>
+              <div
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "2rem",
+                  marginTop: "2rem",
+                }}
+              >
                 {Object.keys(analyticData.surveyResponses).map(
                   (question, idx) => {
+                    const currentQuestionNumber = idx + 1;
                     return (
-                      <div key={idx} className="flex">
-                        {question} :
-                        {!Array.isArray(
-                          analyticData.surveyResponses[question]
-                        ) ? (
-                          analyticData.surveyResponses[question]
-                        ) : (
-                          <div>
-                            {analyticData.surveyResponses[question].join("/")}
+                      <div
+                        key={idx}
+                        className="flex flex-col justify-between items-start w-[80vw]"
+                      >
+                        <div className="flex gap-6">
+                          <p>{currentQuestionNumber}.</p>
+                          <p style={{ color: "grey" }}>{question} </p>
+                        </div>
+                        <div className="flex gap-6 w-[100%]">
+                          <p>Sol.</p>
+                          <div className="w-[40%] text-left">
+                            {!Array.isArray(
+                              analyticData.surveyResponses[question]
+                            ) ? (
+                              analyticData.surveyResponses[question]
+                            ) : (
+                              <div>
+                                {analyticData.surveyResponses[question].join(
+                                  "/"
+                                )}
+                              </div>
+                            )}
                           </div>
-                        )}
+                        </div>
                       </div>
                     );
                   }

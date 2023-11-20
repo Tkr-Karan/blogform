@@ -10,11 +10,11 @@ export const CheckBox = ({ getData, index }) => {
   });
 
   const handleQuestionChange = (e) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     const newDesc = e.target.value;
-    console.log(newDesc);
+    // console.log(newDesc);
     setQuestion({ ...question, description: newDesc });
-    console.log(question.description);
+    // console.log(question.description);
     updateData();
   };
 
@@ -24,7 +24,7 @@ export const CheckBox = ({ getData, index }) => {
       option.id === optionId ? { ...option, text: newText } : option
     );
     setQuestion({ ...question, options: updatedOptions });
-    console.log("desc", updatedOptions);
+    // console.log("desc", updatedOptions);
     updateData(updatedOptions);
   };
   

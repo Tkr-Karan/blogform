@@ -8,7 +8,7 @@ export default function InputField(props) {
   const contentEditableRef = useRef(null);
 
   const handleInputChange = (e) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     setInputData(e.target.value);
 
     getData(e.target.value)

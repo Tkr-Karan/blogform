@@ -55,9 +55,6 @@ const SurveyBlock = () => {
       toast.error("survey blocks failed!!");
     }
   };
-  // const getData = (data) => {
-  //   console.log(data);
-  // };
 
   const handleInputChange = (index, value) => {
     const updatedInputData = [...inputData];
@@ -71,13 +68,9 @@ const SurveyBlock = () => {
   };
 
   const handleCheckBoxData = (index, data) => {
-    // console.log(data, "hhhhh")
-    setQuestionsData(prevQuestionsData => {
-    const updatedQuestionsData = [...prevQuestionsData];
+    const updatedQuestionsData = [...questionsData];
     updatedQuestionsData[index] = { type: "checkbox", data };
-    // console.log("efree", updatedQuestionsData)
-    return updatedQuestionsData;
-  });
+    setQuestionsData(updatedQuestionsData);
   };
 
   const handleRadioData = (index, data) => {
@@ -85,7 +78,6 @@ const SurveyBlock = () => {
     updatedQuestionsData[index] = { type: "radio", data };
     setQuestionsData(updatedQuestionsData);
   };
-  // console.log(questionsData, "questionsData123");
 
   const renderSurveyBlock = () => {
     return (
@@ -123,11 +115,11 @@ const SurveyBlock = () => {
     <div className="survey-block-container ">
       {isCreating ? (
         <div>
-          <div >
+          <div>
             <h2>Survey Form Creation</h2>
           </div>
 
-          <div className="survey-form-container  p-2 rounded-lg bg-green-100 shadow-slate-600 border-1 border-solid flex gap-3 relative ">
+          <div className="survey-form-container  p-2 rounded-lg bg-green-100 shadow-slate-600 border-1 border-solid flex gap-3 relative survey-form ">
             <form className="w-[30rem] survey-form flex flex-col gap-2 items-start">
               <div className="survey-name w-[100%] flex justify-between">
                 <label> Title: </label>
@@ -136,6 +128,7 @@ const SurveyBlock = () => {
                   value={surveyTitle}
                   onChange={(e) => setSurveyTitle(e.target.value)}
                   className="w-[70%] pl-3"
+                  required
                 />
               </div>
               <div className="survey-description w-[100%] flex justify-between">
@@ -145,7 +138,12 @@ const SurveyBlock = () => {
                   value={surveyDescription}
                   onChange={(e) => setSurveyDescription(e.target.value)}
                   className="w-[70%] pl-3"
+                  required
                 />
+              </div>
+
+              <div style={{ width: "100%" }}>
+                <p>Add atleast 5 questions.</p>
               </div>
 
               {renderSurveyBlock()}
