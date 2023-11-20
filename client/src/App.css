@@ -3,6 +3,7 @@
   height: 100vh;
   display: flex;
   font-family: 'Roboto Mono', monospace;
+  overflow: hidden;
 }
 
 .App-logo {

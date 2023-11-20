@@ -1,0 +1,17 @@
+.add-img {
+  position: relative;
+}
+
+.add-img::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("https://e0.pxfuel.com/wallpapers/220/631/desktop-wallpaper-data-analytics-data-analysis.jpg");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.6;
+  z-index: -1;
+}
