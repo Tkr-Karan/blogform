@@ -116,7 +116,7 @@ export default function AnalyticsBlockTest() {
                           <p style={{ color: "grey" }}>{question} </p>
                         </div>
                         <div className="flex gap-6 w-[100%]">
-                          <p>Sol.</p>
+                          <p>ans.</p>
                           <div className="w-[40%] text-left">
                             {!Array.isArray(
                               analyticData.surveyResponses[question]

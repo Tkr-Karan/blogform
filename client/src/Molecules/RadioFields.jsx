@@ -4,8 +4,8 @@ export const RadioFields = ({ getData }) => {
   const [question, setQuestion] = useState({
     description: "",
     options: [
-      { id: 1, text: "Yes" },
-      { id: 2, text: "No" },
+      { id: 1, text: "" },
+      { id: 2, text: "" },
     ],
   });
 
@@ -51,7 +51,7 @@ export const RadioFields = ({ getData }) => {
             // onFocus={(e) => handleFocus(e)}
             onChange={(e) => handleOptionChange(option.id, e.target.value)}
             value={option.text}
-            placeholder="option value"
+            placeholder="radio value"
           />
         </div>
       ))}

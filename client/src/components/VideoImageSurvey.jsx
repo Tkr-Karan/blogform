@@ -23,12 +23,9 @@ export default function VideoImageSurvey(props) {
             </div>
           ) : (
             <div className="w-[100%] grid grid-cols-3 flex-wrap gap-4 self-center items-start justify-center mt-4">
-              <div
-                className=" flex flex-col items-center gap-2"
-                style={{ width: "100%" }}
-              >
+              <div className=" flex flex-col gap-2 items-center w-[100%] h-[100%]">
                 <h2 className="text-2xl capitalize">images</h2>
-                <div className=" w-[90%] flex flex-wrap gap-1 justify-start items-center  h-[80%]  overflow-y-scroll">
+                <div className=" w-[90%] flex flex-wrap gap-1 justify-start items-start  h-[80%]  overflow-y-scroll">
                   {blockData.imageData.data.map((block, index) => {
                     return (
                       <div
@@ -58,9 +55,9 @@ export default function VideoImageSurvey(props) {
                   })}
                 </div>
               </div>
-              <div className="flex flex-col gap-2 w-[100%]">
+              <div className="flex flex-col gap-2 w-[100%] h-[100%]">
                 <h2 className="text-2xl capitalize">Survey</h2>
-                <div className=" w-[90%] flex flex-col gap-1 justify-start items-center  h-[80%]  overflow-y-scroll">
+                <div className="w-[90%] flex flex-wrap gap-1 justify-center items-center h-[80%]  overflow-y-scroll">
                   {blockData.surveyData.data.map((block, index) => {
                     return (
                       <div
@@ -80,7 +77,6 @@ export default function VideoImageSurvey(props) {
       ) : (
         <div className="w-[100%] h-[100%] flex justify-center items-center">
           <Loader />
-
         </div>
       )}
     </div>
