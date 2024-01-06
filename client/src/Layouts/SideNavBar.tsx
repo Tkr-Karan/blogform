@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./SideNavBar.css";
 import { Link } from "react-router-dom";
 
 const SideNavBar = () => {
   const [activeLink, setActiveLink] = useState(""); // Initialize activeLink state
+  const [count, setCount] = useState(0);
 
   // Function to handle the click event and set the active link
   const handleLinkClick = (link: string) => {
@@ -13,6 +14,14 @@ const SideNavBar = () => {
   const handleLogoClick = () => {
     setActiveLink("");
   };
+
+  useEffect(() => {
+    const AnalyticsFetched = fetch("/api/analytics/get-analytics-data")
+      .then((res) => res.json())
+      .then((data) => {
+        setCount(data.data.length);
+      });
+  }, [count]);
 
   return (
     <div className="sidenav-container">
@@ -65,11 +74,14 @@ const SideNavBar = () => {
           className="nav-links"
         >
           <i
-            className={`fa-solid fa-chart-simple ${
+            className={`relative fa-solid fa-chart-simple ${
               activeLink === "/analytics" ? "active-link" : ""
             } `}
           ></i>
           <span className="nav-label">analytics</span>
+          <div className="analytics-count absolute -top-1 right-2 text-slate-50 bg-black rounded-lg p-2 w-3 h-4 flex justify-center items-center text-[.8rem] font-bold">
+            {count}
+          </div>
         </Link>
       </div>
     </div>

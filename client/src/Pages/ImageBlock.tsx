@@ -2,12 +2,15 @@ import React, { useEffect, useState } from "react";
 import "./Stylesheets/ImageBlock.css";
 import { ImagesBlocks } from "../ApiCalls/blocks";
 import { ToastContainer, toast } from "react-toastify";
+// import Form from "../Molecules/Form";
 
 const ImageBlock = () => {
   const [isCreating, setIsCreating] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [files, setFiles] = useState<File[]>([]);
+  const [isSaved, setIsSaved] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [imageURL, setImageURL] = useState<string[]>([]);
 
@@ -19,9 +22,10 @@ const ImageBlock = () => {
     e.preventDefault();
 
     try {
+      setIsLoading(true);
       const base64Images = await convertImagesToBase64(imageURL);
 
-      console.log(base64Images);
+      // console.log(base64Images);
       const imageBlockData = {
         title: title,
         description: description,
@@ -30,9 +34,10 @@ const ImageBlock = () => {
 
       const res = await ImagesBlocks(imageBlockData);
       if (res.success) {
-        toast.success("Image survey dded successfully")
+        toast.success("Image survey dded successfully");
+        setIsSaved(true);
       } else {
-        toast.error("Image survey failed!")
+        toast.error("Image survey failed!");
       }
 
       // console.log("imaageBlockData: ", imageBlockData);
@@ -40,7 +45,13 @@ const ImageBlock = () => {
       setTitle("");
       setDescription("");
       setFiles([]);
-    } catch (error) {}
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+      setTimeout(() => {
+        setIsCreating(false);
+      }, 4000);
+    }
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,9 +67,10 @@ const ImageBlock = () => {
       if (files.length + newFiles.length <= 4) {
         const updatedFiles = [...files, ...newFiles];
         setFiles(updatedFiles);
-      } else {
-        alert("You can only upload up to 4 images.");
       }
+      // } else {
+      //   alert("You can only upload up to 4 images.");
+      // }
     }
 
     // console.log("image files ==> ", files)
@@ -152,6 +164,7 @@ const ImageBlock = () => {
 
                 {files.length < 4 && (
                   <input
+                    style={{ border: "none" }}
                     type="file"
                     accept="image/*"
                     onChange={handleFileChange}
@@ -161,10 +174,16 @@ const ImageBlock = () => {
             </div>
 
             <button
-              className="save-btn self-end w-16 bottom-0 right-0 mb-2 mr-4 bg-blue-600 p-2 rounded-xl cursor-pointer text-white"
+              className="save-btn self-end w-[8rem] bottom-0 right-0 mb-2 mr-4 bg-blue-600 p-2 rounded-xl cursor-pointer text-white"
               type="submit"
             >
-              Save
+              {isSaved ? (
+                <div>Saved</div>
+              ) : isLoading ? (
+                <div>saving...</div>
+              ) : (
+                <button>Save</button>
+              )}
             </button>
             <ToastContainer />
           </form>

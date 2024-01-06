@@ -26,3 +26,27 @@ export const VideoBlocks = async (payload) => {
     return error;
   }
 };
+
+export const PublishedBlocks = async (payload) => {
+  try {
+    const response = await axiosInstance.post(
+      "/api/published/get-published",
+      payload
+    );
+
+    return response.data
+  } catch (error) {
+    return error;
+  }
+};
+
+
+export const SurveyBlocks = async (payload) => {
+  try {
+    const response = await axiosInstance.post('/api/survey/survey-blocks', payload);
+    return response.data
+  } catch (error) {
+    return error
+    
+  }
+}

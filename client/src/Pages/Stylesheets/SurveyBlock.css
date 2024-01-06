@@ -1,7 +1,11 @@
-.survey-block-container{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.survey-block-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.survey-form {
+  box-shadow: 4px 4p 10px red;
 }

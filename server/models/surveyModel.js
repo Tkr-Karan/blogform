@@ -11,7 +11,13 @@ const SurveyBlockSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    questionsData: {
+      type: Object,
+    },
+    blockType: {
+      type: { type: String, default: "survey" },
+    },
   },
   { timestamps: true }
 );
-module.exports = mongoose.model("SurveyBlock", SurveyBlockSchema);
+module.exports = mongoose.model("SurveyModel", SurveyBlockSchema);

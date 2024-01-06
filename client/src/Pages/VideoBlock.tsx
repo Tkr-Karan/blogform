@@ -120,12 +120,12 @@ const VideoBlock = () => {
                     >
                       Remove
                     </button>
-                   
                   </div>
                 ))}
 
                 {videoFiles.length < 1 && (
                   <input
+                    style={{ border: "none" }}
                     type="file"
                     accept="video/*"
                     onChange={handleAddVideo}
